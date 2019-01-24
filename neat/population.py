@@ -80,13 +80,14 @@ class Population(object):
             raise RuntimeError("Cannot have no generational limit with no fitness termination")
 
         k = 0
-        while n is None or k < n:
+        sc = None
+        while (n is None or k < n) and (sc!=-1):
             k += 1
 
             self.reporters.start_generation(self.generation)
 
             # Evaluate all genomes using the user-provided function.
-            fitness_function(list(iteritems(self.population)), self.config)
+            sc = fitness_function(list(iteritems(self.population)), self.config)
 
             # Gather and report statistics.
             best = None
